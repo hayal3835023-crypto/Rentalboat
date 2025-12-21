@@ -1,0 +1,174 @@
+{
+  "identity": {
+    "name": "E1",
+    "role": "Anti-AI Designer",
+    "mission": "Create a boat rental platform that feels like a summer breeze, not a spreadsheet.",
+    "principles": [
+      "Fusion: Airbnb simplicity x Yacht Club elegance",
+      "Emotion: Sun, Salt, and Freedom",
+      "Content: High-fidelity imagery is the hero",
+      "Interaction: Fluid, swipe-heavy, mobile-first"
+    ]
+  },
+  "typography": {
+    "fonts": {
+      "heading": "Manrope",
+      "body": "DM Sans"
+    },
+    "weights": {
+      "heading": "font-bold tracking-tight",
+      "body": "font-normal",
+      "accent": "font-medium"
+    },
+    "scale": {
+      "h1": "text-4xl md:text-5xl lg:text-6xl",
+      "h2": "text-3xl md:text-4xl",
+      "h3": "text-2xl md:text-3xl",
+      "body": "text-base md:text-lg",
+      "caption": "text-sm text-muted-foreground"
+    }
+  },
+  "colors": {
+    "palette": {
+      "primary": {
+        "name": "Riviera Teal",
+        "hex": "#0D9488",
+        "tailwind": "bg-teal-600 text-white hover:bg-teal-700"
+      },
+      "secondary": {
+        "name": "Deep Ocean",
+        "hex": "#0F172A",
+        "tailwind": "bg-slate-900 text-white"
+      },
+      "accent": {
+        "name": "Sunset Coral",
+        "hex": "#F97316",
+        "tailwind": "bg-orange-500 text-white hover:bg-orange-600"
+      },
+      "background": {
+        "light": "#F8FAFC",
+        "dark": "#020617",
+        "tailwind": "bg-slate-50 dark:bg-slate-950"
+      },
+      "surface": {
+        "light": "#FFFFFF",
+        "dark": "#0F172A",
+        "tailwind": "bg-white dark:bg-slate-900"
+      }
+    },
+    "usage": {
+      "buttons": "Primary Teal for main actions, Ghost for secondary",
+      "text": "Slate-900 for headings, Slate-600 for body",
+      "borders": "border-slate-200 dark:border-slate-800"
+    }
+  },
+  "visual_enhancers": {
+    "radius": "rounded-2xl",
+    "shadows": "shadow-lg shadow-slate-200/50 dark:shadow-none",
+    "glassmorphism": "bg-white/80 backdrop-blur-md border border-white/20",
+    "gradients": "bg-gradient-to-br from-teal-50 to-slate-50 dark:from-slate-900 dark:to-slate-950"
+  },
+  "layout": {
+    "grid_system": "Mobile-first 1 col, Tablet 2 cols, Desktop 4 cols (Bento style)",
+    "spacing": {
+      "section": "py-16 md:py-24",
+      "container": "px-4 md:px-8 max-w-7xl mx-auto",
+      "element": "gap-4 md:gap-8"
+    },
+    "containers": {
+      "card": "rounded-2xl overflow-hidden border border-border bg-card text-card-foreground transition-all hover:shadow-xl hover:-translate-y-1",
+      "hero": "min-h-[60vh] flex items-center justify-center relative overflow-hidden"
+    }
+  },
+  "components": {
+    "buttons": {
+      "base": "h-12 px-6 rounded-full font-semibold transition-all active:scale-95",
+      "primary": "bg-teal-600 text-white hover:bg-teal-700 shadow-lg shadow-teal-600/20",
+      "secondary": "bg-white text-slate-900 border border-slate-200 hover:bg-slate-50"
+    },
+    "inputs": {
+      "base": "h-12 rounded-xl border-slate-200 bg-slate-50 focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+    },
+    "cards": {
+      "boat_listing": "group relative aspect-[4/3] overflow-hidden rounded-2xl"
+    },
+    "navigation": {
+      "mobile": "fixed bottom-0 left-0 right-0 h-16 bg-white/90 backdrop-blur-lg border-t border-slate-200 flex justify-around items-center z-50",
+      "desktop": "sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60"
+    }
+  },
+  "images": {
+    "hero": [
+      {
+        "url": "https://images.unsplash.com/photo-1763467940683-3f267f3ff80a?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjB5YWNodCUyMHR1cnF1b2lzZSUyMHdhdGVyJTIwbWVkaXRlcnJhbmVhbnxlbnwwfHx8fDE3NjYzNTI1MzN8MA&ixlib=rb-4.1.0&q=85",
+        "alt": "Luxury Yacht in Mediterranean",
+        "category": "hero"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1758970441797-3e9f72b30b50?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2Nzd8MHwxfHNlYXJjaHw0fHxsdXh1cnklMjB5YWNodCUyMHR1cnF1b2lzZSUyMHdhdGVyJTIwbWVkaXRlcnJhbmVhbnxlbnwwfHx8fDE3NjYzNTI1MzN8MA&ixlib=rb-4.1.0&q=85",
+        "alt": "White motorboat on turquoise water",
+        "category": "hero"
+      }
+    ],
+    "boats": [
+      {
+        "url": "https://images.unsplash.com/photo-1759244568871-73f003eae619?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDQ2NDN8MHwxfHNlYXJjaHwyfHxzYWlsYm9hdCUyMGZyZW5jaCUyMHJpdmllcmElMjBjb2FzdHxlbnwwfHx8fDE3NjYzNTI1MzZ8MA&ixlib=rb-4.1.0&q=85",
+        "alt": "Sailboats in harbor",
+        "category": "listing"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1747505663936-9b5388fc44e5?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2Nzh8MHwxfHNlYXJjaHwxfHxqZXQlMjBza2klMjBhY3Rpb24lMjBibHVlJTIwd2F0ZXJ8ZW58MHx8fHwxNzY2MzUyNTQyfDA&ixlib=rb-4.1.0&q=85",
+        "alt": "Jet Ski Action",
+        "category": "listing"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1620674289039-48d54636f283?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDQ2NDN8MHwxfHNlYXJjaHwzfHxzYWlsYm9hdCUyMGZyZW5jaCUyMHJpdmllcmElMjBjb2FzdHxlbnwwfHx8fDE3NjYzNTI1MzZ8MA&ixlib=rb-4.1.0&q=85",
+        "alt": "White boats on sea",
+        "category": "listing"
+      }
+    ],
+    "destinations": [
+      {
+        "url": "https://images.unsplash.com/photo-1764075971819-2858d71465eb?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2Njd8MHwxfHNlYXJjaHwyfHxtYXJzZWlsbGUlMjBvbGQlMjBwb3J0JTIwc3Vubnl8ZW58MHx8fHwxNzY2MzUyNTQ0fDA&ixlib=rb-4.1.0&q=85",
+        "alt": "Marseille Old Port",
+        "category": "destination"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1759848634428-7cb4f1d637e1?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDQ2NDN8MHwxfHNlYXJjaHwxfHxzYWlsYm9hdCUyMGZyZW5jaCUyMHJpdmllcmElMjBjb2FzdHxlbnwwfHx8fDE3NjYzNTI1MzZ8MA&ixlib=rb-4.1.0&q=85",
+        "alt": "French Riviera Coast",
+        "category": "destination"
+      }
+    ]
+  },
+  "instructions_to_main_agent": [
+    "Use .jsx extension for all React components.",
+    "Implement a 'Mobile First' approach. The design should feel like a native app on mobile.",
+    "Use 'Manrope' for all headings and 'DM Sans' for body text. Import them from Google Fonts in index.css.",
+    "Customize tailwind.config.js to add the 'Riviera Teal' (#0D9488) as the primary color.",
+    "Use 'sonner' for all toast notifications.",
+    "For the Map, use 'react-leaflet'. Custom markers should be circular with the price inside.",
+    "The 'Boat Detail' page should have a sticky bottom bar on mobile for the 'Book' button.",
+    "Use the provided image URLs for demo data. Do not use placeholders.",
+    "Ensure all interactive elements have data-testid attributes.",
+    "Do not use gradients for the main background. Keep it clean #F8FAFC.",
+    "Use 'lucide-react' for icons (Anchor, MapPin, Calendar, User, etc.)."
+  ],
+  "UNIVERSAL_GUIDELINES_FOR_MAIN_AGENT": [
+    "Dark colors look good when used independently without gradients. DO NOT use dark colors as gradients",
+    "Don't make generic centered layouts, simplistic gradients, and uniform styling.",
+    "Create depth through layered design elements with z-index hierarchy",
+    "Use glass-morphism effects with backdrop filters (12-24px blur)",
+    "You MUST NOT apply universal transition. Eg: transition: all. This results in breaking transforms. Always add transitions for specific interactive elements like button, input excluding transforms",
+    "You MUST NOT center align the app container, ie do not add .App { text-align: center; } in the css file. This disrupts the human natural reading flow of text",
+    "Always use modern button styles like pill-shaped, or sharp button with interaction animations & color relevant to the app style",
+    "NEVER: use AI assistant Emoji characters like 🤖🧠💭💡 etc for icons.",
+    "Every interaction needs micro-animations - hover states, transitions, parallax effects, and entrance animations. Static = dead.",
+    "Use 2-3x more spacing than feels comfortable. Cramped designs look cheap.",
+    "Subtle grain textures, noise overlays, custom cursors, selection states, and loading animations: separates good from extraordinary.",
+    "Main agent relies on these image URLs. Missing categories (especially sponsor logos) = main agent will use placeholder text which is FORBIDDEN",
+    "Prioritize using pre-existing components from src/components/ui when applicable",
+    "Components MUST use named exports (export const ComponentName = ...)",
+    "Pages MUST use default exports (export default function PageName() {...})",
+    "Use sonner for toasts"
+  ]
+}
