@@ -1,34 +1,166 @@
-.App-logo {
-    height: 40vmin;
-    pointer-events: none;
+/* App specific styles */
+
+/* Boat card hover effect */
+.boat-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-    .App-logo {
-        animation: App-logo-spin infinite 20s linear;
-    }
+.boat-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
 }
 
-.App-header {
-    background-color: #0f0f10;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: calc(10px + 2vmin);
-    color: white;
+/* Category card hover */
+.category-card {
+  transition: transform 0.2s ease, border-color 0.2s ease;
 }
 
-.App-link {
-    color: #61dafb;
+.category-card:hover {
+  transform: scale(1.02);
+  border-color: #0D9488;
 }
 
-@keyframes App-logo-spin {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
+/* Image gallery */
+.gallery-image {
+  transition: opacity 0.3s ease;
+}
+
+/* Button hover states */
+.btn-primary {
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.btn-primary:hover {
+  background-color: #0F766E;
+}
+
+.btn-primary:active {
+  transform: scale(0.98);
+}
+
+/* Heart animation */
+.heart-button {
+  transition: transform 0.2s ease;
+}
+
+.heart-button:hover {
+  transform: scale(1.1);
+}
+
+.heart-button.active {
+  animation: heartPop 0.3s ease;
+}
+
+@keyframes heartPop {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.3); }
+  100% { transform: scale(1); }
+}
+
+/* Search input focus */
+.search-input:focus {
+  box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.2);
+}
+
+/* Map marker pulse */
+.marker-pulse {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(13, 148, 136, 0.4); }
+  70% { box-shadow: 0 0 0 10px rgba(13, 148, 136, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(13, 148, 136, 0); }
+}
+
+/* Mobile navigation */
+.mobile-nav-item {
+  transition: color 0.2s ease;
+}
+
+.mobile-nav-item.active {
+  color: #0D9488;
+}
+
+/* Loading skeleton */
+.skeleton {
+  background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Calendar styles override */
+.rdp {
+  --rdp-accent-color: #0D9488;
+  --rdp-background-color: #e6fffa;
+}
+
+/* Toast positioning */
+.sonner-toast {
+  font-family: 'DM Sans', sans-serif;
+}
+
+/* Sticky booking bar on mobile */
+.sticky-booking-bar {
+  position: fixed;
+  bottom: 64px;
+  left: 0;
+  right: 0;
+  background: white;
+  border-top: 1px solid #e2e8f0;
+  padding: 12px 16px;
+  z-index: 40;
+}
+
+@media (min-width: 768px) {
+  .sticky-booking-bar {
+    position: static;
+    border: none;
+    padding: 0;
+  }
+}
+
+/* Image carousel dots */
+.carousel-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.carousel-dot.active {
+  background: white;
+  transform: scale(1.2);
+}
+
+/* Rating stars */
+.star-rating {
+  color: #F97316;
+}
+
+/* Badge styles */
+.badge-verified {
+  background: linear-gradient(135deg, #0D9488, #14B8A6);
+  color: white;
+}
+
+/* Destination card overlay */
+.destination-overlay {
+  background: linear-gradient(to top, rgba(15, 23, 42, 0.8), transparent);
+}
+
+/* Price tag style */
+.price-tag {
+  background: #0D9488;
+  color: white;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 14px;
 }
