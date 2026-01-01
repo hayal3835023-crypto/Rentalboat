@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
   User, Heart, Calendar, CreditCard, LogOut, ChevronRight, 
-  Settings, Camera, Bell, Shield, Anchor
+  Settings, Camera, Bell, Ship
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -41,11 +41,11 @@ export default function ProfilePage() {
   };
 
   const menuItems = [
+    { icon: Ship, label: 'Mes annonces', path: '/owner/boats', color: 'text-teal-600' },
     { icon: Heart, label: 'Mes favoris', path: '/favorites', color: 'text-red-500' },
-    { icon: Calendar, label: 'Mes réservations', path: '/my-bookings', color: 'text-teal-600' },
-    { icon: CreditCard, label: 'Moyens de paiement', path: '#', color: 'text-blue-500' },
+    { icon: Calendar, label: 'Mes réservations', path: '/my-bookings', color: 'text-blue-500' },
+    { icon: CreditCard, label: 'Moyens de paiement', path: '#', color: 'text-purple-500' },
     { icon: Bell, label: 'Notifications', path: '#', color: 'text-orange-500' },
-    { icon: Shield, label: 'Confidentialité', path: '#', color: 'text-purple-500' },
     { icon: Settings, label: 'Paramètres', path: '#', color: 'text-slate-500' }
   ];
 
