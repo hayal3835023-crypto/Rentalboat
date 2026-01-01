@@ -460,6 +460,43 @@ async def get_my_boats(request: Request):
     boats = await db.boats.find({"owner_id": user["user_id"]}, {"_id": 0}).to_list(100)
     return boats
 
+@api_router.put("/boats/{boat_id}")
+async def update_boat(boat_id: str, data: BoatCreate, request: Request):
+    user = await require_auth(request)
+    
+    boat = await db.boats.find_one({"boat_id": boat_id}, {"_id": 0})
+    if not boat:
+        raise HTTPException(status_code=404, detail="Boat not found")
+    
+    if boat["owner_id"] != user["user_id"]:
+        raise HTTPException(status_code=403, detail="Not authorized")
+    
+    update_data = data.model_dump()
+    await db.boats.update_one({"boat_id": boat_id}, {"$set": update_data})
+    
+    return {"message": "Boat updated successfully"}
+
+@api_router.delete("/boats/{boat_id}")
+async def delete_boat(boat_id: str, request: Request):
+    user = await require_auth(request)
+    
+    boat = await db.boats.find_one({"boat_id": boat_id}, {"_id": 0})
+    if not boat:
+        raise HTTPException(status_code=404, detail="Boat not found")
+    
+    if boat["owner_id"] != user["user_id"]:
+        raise HTTPException(status_code=403, detail="Not authorized")
+    
+    # Delete related data
+    await db.boats.delete_one({"boat_id": boat_id})
+    await db.favorites.delete_many({"boat_id": boat_id})
+    await db.bookings.update_many(
+        {"boat_id": boat_id, "status": "pending"},
+        {"$set": {"status": "cancelled"}}
+    )
+    
+    return {"message": "Boat deleted successfully"}
+
 # ============== BOOKINGS ENDPOINTS ==============
 
 @api_router.post("/bookings")
