@@ -272,7 +272,7 @@ export default function BookingPage() {
             )}
 
             <div className="flex justify-between text-slate-600">
-              <span>Frais de service</span>
+              <span>Commission plateforme (10%)</span>
               <span>{formatPrice(serviceFee)}</span>
             </div>
 
