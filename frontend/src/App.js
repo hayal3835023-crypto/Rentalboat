@@ -15,6 +15,8 @@ import MyBookingsPage from "@/pages/MyBookingsPage";
 import MessagesPage from "@/pages/MessagesPage";
 import LoginPage from "@/pages/LoginPage";
 import RegisterPage from "@/pages/RegisterPage";
+import MyBoatsPage from "@/pages/MyBoatsPage";
+import BoatFormPage from "@/pages/BoatFormPage";
 
 // Components
 import { MobileNavigation } from "@/components/MobileNavigation";
@@ -92,6 +94,30 @@ function AppRouter() {
           element={
             <ProtectedRoute>
               <MessagesPage />
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/owner/boats" 
+          element={
+            <ProtectedRoute>
+              <MyBoatsPage />
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/owner/boats/new" 
+          element={
+            <ProtectedRoute>
+              <BoatFormPage />
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/owner/boats/:boatId/edit" 
+          element={
+            <ProtectedRoute>
+              <BoatFormPage />
             </ProtectedRoute>
           } 
         />
