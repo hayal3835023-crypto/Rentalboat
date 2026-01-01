@@ -51,7 +51,7 @@ export default function BookingPage() {
   const basePrice = boat ? boat.price_per_day * days : 0;
   const skipperPrice = withSkipper && boat ? boat.skipper_price * days : 0;
   const totalPrice = basePrice + skipperPrice;
-  const serviceFee = Math.round(totalPrice * 0.15);
+  const serviceFee = Math.round(totalPrice * 0.10); // Commission 10%
   const grandTotal = totalPrice + serviceFee;
 
   const formatPrice = (price) => {

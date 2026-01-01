@@ -517,7 +517,7 @@ async def create_booking(data: BookingCreate, request: Request):
     base_price = boat["price_per_day"] * days
     skipper_price = boat.get("skipper_price", 0) * days if data.with_skipper else 0
     total_price = base_price + skipper_price
-    service_fee = round(total_price * 0.15, 2)
+    service_fee = round(total_price * 0.10, 2)  # Commission 10%
     
     booking_id = f"booking_{uuid.uuid4().hex[:12]}"
     booking_doc = {
