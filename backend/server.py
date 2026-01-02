@@ -1097,6 +1097,72 @@ async def seed_demo_data():
     
     return {"message": "Demo data created successfully", "boats_count": len(demo_boats)}
 
+# ============== ADMIN ENDPOINTS ==============
+
+@api_router.get("/admin/stats")
+async def get_admin_stats():
+    total_users = await db.users.count_documents({})
+    owners_count = await db.users.count_documents({"is_owner": True})
+    total_boats = await db.boats.count_documents({})
+    verified_boats = await db.boats.count_documents({"is_verified": True})
+    total_bookings = await db.bookings.count_documents({})
+    confirmed_bookings = await db.bookings.count_documents({"status": "confirmed"})
+    
+    # Calculate total commission
+    bookings = await db.bookings.find({}, {"_id": 0, "total_price": 1, "service_fee": 1}).to_list(10000)
+    total_commission = sum(b.get("service_fee", 0) for b in bookings)
+    total_bookings_value = sum(b.get("total_price", 0) for b in bookings)
+    
+    return {
+        "total_users": total_users,
+        "owners_count": owners_count,
+        "total_boats": total_boats,
+        "verified_boats": verified_boats,
+        "total_bookings": total_bookings,
+        "confirmed_bookings": confirmed_bookings,
+        "total_commission": total_commission,
+        "total_bookings_value": total_bookings_value
+    }
+
+@api_router.get("/admin/bookings")
+async def get_admin_bookings():
+    bookings = await db.bookings.find({}, {"_id": 0}).sort("created_at", -1).to_list(500)
+    
+    # Add user and boat names
+    for booking in bookings:
+        user = await db.users.find_one({"user_id": booking["user_id"]}, {"_id": 0, "name": 1})
+        boat = await db.boats.find_one({"boat_id": booking["boat_id"]}, {"_id": 0, "name": 1})
+        booking["user_name"] = user.get("name") if user else "N/A"
+        booking["boat_name"] = boat.get("name") if boat else "N/A"
+    
+    return bookings
+
+@api_router.get("/admin/users")
+async def get_admin_users():
+    users = await db.users.find({}, {"_id": 0, "password": 0}).sort("created_at", -1).to_list(500)
+    return users
+
+@api_router.get("/admin/boats")
+async def get_admin_boats():
+    boats = await db.boats.find({}, {"_id": 0}).sort("created_at", -1).to_list(500)
+    
+    # Add owner names
+    for boat in boats:
+        owner = await db.users.find_one({"user_id": boat["owner_id"]}, {"_id": 0, "name": 1})
+        boat["owner_name"] = owner.get("name") if owner else "N/A"
+    
+    return boats
+
+@api_router.put("/admin/boats/{boat_id}/verify")
+async def verify_boat(boat_id: str):
+    result = await db.boats.update_one(
+        {"boat_id": boat_id},
+        {"$set": {"is_verified": True}}
+    )
+    if result.modified_count == 0:
+        raise HTTPException(status_code=404, detail="Boat not found")
+    return {"message": "Boat verified successfully"}
+
 # ============== ROOT ==============
 
 @api_router.get("/")
