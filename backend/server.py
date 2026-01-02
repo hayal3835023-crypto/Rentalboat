@@ -32,6 +32,11 @@ STRIPE_API_KEY = os.environ.get('STRIPE_API_KEY')
 app = FastAPI()
 api_router = APIRouter(prefix="/api")
 
+# Root level health check for Kubernetes
+@app.get("/health")
+async def root_health():
+    return {"status": "healthy"}
+
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
