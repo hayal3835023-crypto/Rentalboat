@@ -556,10 +556,13 @@ async def get_bookings(request: Request):
     
     bookings = await db.bookings.find({"user_id": user["user_id"]}, {"_id": 0}).sort("created_at", -1).to_list(100)
     
-    # Add boat info to each booking
+    # Batch fetch boats
+    boat_ids = [b["boat_id"] for b in bookings]
+    boats = await db.boats.find({"boat_id": {"$in": boat_ids}}, {"_id": 0}).to_list(100)
+    boats_map = {b["boat_id"]: b for b in boats}
+    
     for booking in bookings:
-        boat = await db.boats.find_one({"boat_id": booking["boat_id"]}, {"_id": 0})
-        booking["boat"] = boat
+        booking["boat"] = boats_map.get(booking["boat_id"])
     
     return bookings
 
@@ -569,11 +572,19 @@ async def get_owner_bookings(request: Request):
     
     bookings = await db.bookings.find({"owner_id": user["user_id"]}, {"_id": 0}).sort("created_at", -1).to_list(100)
     
+    # Batch fetch boats and renters
+    boat_ids = [b["boat_id"] for b in bookings]
+    user_ids = [b["user_id"] for b in bookings]
+    
+    boats = await db.boats.find({"boat_id": {"$in": boat_ids}}, {"_id": 0}).to_list(100)
+    users = await db.users.find({"user_id": {"$in": user_ids}}, {"_id": 0, "password": 0}).to_list(100)
+    
+    boats_map = {b["boat_id"]: b for b in boats}
+    users_map = {u["user_id"]: u for u in users}
+    
     for booking in bookings:
-        boat = await db.boats.find_one({"boat_id": booking["boat_id"]}, {"_id": 0})
-        booking["boat"] = boat
-        renter = await db.users.find_one({"user_id": booking["user_id"]}, {"_id": 0, "password": 0})
-        booking["renter"] = renter
+        booking["boat"] = boats_map.get(booking["boat_id"])
+        booking["renter"] = users_map.get(booking["user_id"])
     
     return bookings
 
@@ -643,13 +654,12 @@ async def get_favorites(request: Request):
     
     favorites = await db.favorites.find({"user_id": user["user_id"]}, {"_id": 0}).to_list(100)
     
-    boats = []
-    for fav in favorites:
-        boat = await db.boats.find_one({"boat_id": fav["boat_id"]}, {"_id": 0})
-        if boat:
-            boats.append(boat)
+    # Batch fetch boats
+    boat_ids = [f["boat_id"] for f in favorites]
+    boats = await db.boats.find({"boat_id": {"$in": boat_ids}}, {"_id": 0}).to_list(100)
+    boats_map = {b["boat_id"]: b for b in boats}
     
-    return boats
+    return [boats_map[f["boat_id"]] for f in favorites if f["boat_id"] in boats_map]
 
 @api_router.get("/favorites/check/{boat_id}")
 async def check_favorite(boat_id: str, request: Request):
@@ -685,9 +695,9 @@ async def send_message(data: MessageCreate, request: Request):
 async def get_conversations(request: Request):
     user = await require_auth(request)
     
-    # Get unique conversation partners
-    sent = await db.messages.find({"sender_id": user["user_id"]}, {"_id": 0}).to_list(1000)
-    received = await db.messages.find({"receiver_id": user["user_id"]}, {"_id": 0}).to_list(1000)
+    # Get unique conversation partners with projection
+    sent = await db.messages.find({"sender_id": user["user_id"]}, {"_id": 0, "receiver_id": 1}).to_list(1000)
+    received = await db.messages.find({"receiver_id": user["user_id"]}, {"_id": 0, "sender_id": 1}).to_list(1000)
     
     partners = set()
     for msg in sent:
@@ -695,9 +705,15 @@ async def get_conversations(request: Request):
     for msg in received:
         partners.add(msg["sender_id"])
     
+    partners_list = list(partners)
+    
+    # Batch fetch all partners
+    users = await db.users.find({"user_id": {"$in": partners_list}}, {"_id": 0, "password": 0}).to_list(100)
+    users_map = {u["user_id"]: u for u in users}
+    
     conversations = []
-    for partner_id in partners:
-        partner = await db.users.find_one({"user_id": partner_id}, {"_id": 0, "password": 0})
+    for partner_id in partners_list:
+        partner = users_map.get(partner_id)
         if partner:
             # Get last message
             last_msg = await db.messages.find_one(
@@ -1133,12 +1149,19 @@ async def get_admin_stats():
 async def get_admin_bookings():
     bookings = await db.bookings.find({}, {"_id": 0}).sort("created_at", -1).to_list(500)
     
-    # Add user and boat names
+    # Batch fetch users and boats
+    user_ids = list(set(b["user_id"] for b in bookings))
+    boat_ids = list(set(b["boat_id"] for b in bookings))
+    
+    users = await db.users.find({"user_id": {"$in": user_ids}}, {"_id": 0, "user_id": 1, "name": 1}).to_list(500)
+    boats = await db.boats.find({"boat_id": {"$in": boat_ids}}, {"_id": 0, "boat_id": 1, "name": 1}).to_list(500)
+    
+    users_map = {u["user_id"]: u.get("name", "N/A") for u in users}
+    boats_map = {b["boat_id"]: b.get("name", "N/A") for b in boats}
+    
     for booking in bookings:
-        user = await db.users.find_one({"user_id": booking["user_id"]}, {"_id": 0, "name": 1})
-        boat = await db.boats.find_one({"boat_id": booking["boat_id"]}, {"_id": 0, "name": 1})
-        booking["user_name"] = user.get("name") if user else "N/A"
-        booking["boat_name"] = boat.get("name") if boat else "N/A"
+        booking["user_name"] = users_map.get(booking["user_id"], "N/A")
+        booking["boat_name"] = boats_map.get(booking["boat_id"], "N/A")
     
     return bookings
 
@@ -1151,10 +1174,13 @@ async def get_admin_users():
 async def get_admin_boats():
     boats = await db.boats.find({}, {"_id": 0}).sort("created_at", -1).to_list(500)
     
-    # Add owner names
+    # Batch fetch owner names
+    owner_ids = list(set(b["owner_id"] for b in boats))
+    owners = await db.users.find({"user_id": {"$in": owner_ids}}, {"_id": 0, "user_id": 1, "name": 1}).to_list(500)
+    owners_map = {o["user_id"]: o.get("name", "N/A") for o in owners}
+    
     for boat in boats:
-        owner = await db.users.find_one({"user_id": boat["owner_id"]}, {"_id": 0, "name": 1})
-        boat["owner_name"] = owner.get("name") if owner else "N/A"
+        boat["owner_name"] = owners_map.get(boat["owner_id"], "N/A")
     
     return boats
 
