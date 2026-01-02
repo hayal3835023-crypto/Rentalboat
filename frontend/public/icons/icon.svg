@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="100" fill="#0D9488"/>
+  <g transform="translate(256, 256)">
+    <!-- Anchor icon -->
+    <path d="M0,-140 L0,-100 M-60,-100 L60,-100 M0,-100 L0,100 M-80,60 Q0,140 80,60" 
+          stroke="white" stroke-width="28" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <circle cx="0" cy="-140" r="30" fill="white"/>
+  </g>
+</svg>
