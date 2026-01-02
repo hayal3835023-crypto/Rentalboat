@@ -23,6 +23,7 @@ import AdminDashboard from "@/pages/AdminDashboard";
 import { MobileNavigation } from "@/components/MobileNavigation";
 import { AuthCallback } from "@/components/AuthCallback";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
+import { PWAInstallPrompt } from "@/components/PWAInstallPrompt";
 import { AuthProvider } from "@/contexts/AuthContext";
 
 // REMINDER: DO NOT HARDCODE THE URL, OR ADD ANY FALLBACKS OR REDIRECT URLS, THIS BREAKS THE AUTH
@@ -125,6 +126,7 @@ function AppRouter() {
         />
       </Routes>
       <MobileNavigation />
+      <PWAInstallPrompt />
     </>
   );
 }
