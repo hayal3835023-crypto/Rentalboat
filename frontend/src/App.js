@@ -17,6 +17,7 @@ import LoginPage from "@/pages/LoginPage";
 import RegisterPage from "@/pages/RegisterPage";
 import MyBoatsPage from "@/pages/MyBoatsPage";
 import BoatFormPage from "@/pages/BoatFormPage";
+import AdminDashboard from "@/pages/AdminDashboard";
 
 // Components
 import { MobileNavigation } from "@/components/MobileNavigation";
@@ -37,6 +38,7 @@ function AppRouter() {
     <>
       <Routes>
         <Route path="/" element={<HomePage />} />
+        <Route path="/admin" element={<AdminDashboard />} />
         <Route path="/search" element={<SearchPage />} />
         <Route path="/boat/:boatId" element={<BoatDetailPage />} />
         <Route path="/login" element={<LoginPage />} />
